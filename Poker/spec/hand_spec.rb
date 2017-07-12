@@ -72,6 +72,67 @@ describe Hand do
     return Hand.new(cards)
   end
 
+  def generate_full_house(value, value2)
+    cards = [
+      Card.new("spades", value),
+      Card.new("hearts", value),
+      Card.new("diamonds", value),
+      Card.new("clubs", value2),
+      Card.new("hearts", value2)
+    ]
+    return Hand.new(cards)
+  end
+
+  def generate_flush(suit)
+    rando = values.sample(5)
+    cards = [
+      Card.new(suit, rando[0]),
+      Card.new(suit, rando[1]),
+      Card.new(suit, rando[2]),
+      Card.new(suit, rando[3]),
+      Card.new(suit, rando[4])
+    ]
+    return Hand.new(cards)
+  end
+
+  def generate_straight(highest_val)
+    # TODO: allow loop arounds for straights
+    raise ArgumentError.new("Highest val is too low to generate flush.") if highest_val < 6
+    cards = [
+      Card.new(card_suits.sample, highest_val),
+      Card.new(card_suits.sample, highest_val-1),
+      Card.new(card_suits.sample, highest_val-2),
+      Card.new(card_suits.sample, highest_val-3),
+      Card.new(card_suits.sample, highest_val-4)
+    ]
+    return Hand.new(cards)
+  end
+
+  def generate_three_of_a_kind(value)
+    rando = values.sample(2)
+    cards = [
+      Card.new("spades", value),
+      Card.new("hearts", value),
+      Card.new("diamonds", value),
+      Card.new("clubs", rando[0]),
+      Card.new("hearts", rando[1])
+    ]
+    return Hand.new(cards)
+  end
+
+  def generate_two_pair(value)
+    rando = values.sample(3)
+    cards = [
+      Card.new("spades", value),
+      Card.new("hearts", value),
+      Card.new("diamonds", rando[3]),
+      Card.new("clubs", rando[0]),
+      Card.new("hearts", rando[1])
+    ]
+    return Hand.new(cards)
+  end
+
+
   class Array
     def without(number)
       self.reject{|n|n==number}
